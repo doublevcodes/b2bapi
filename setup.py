@@ -15,6 +15,6 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/doublevcodes/b2bapi",
-    packages=find_packages(exclude=("tests",)),
+    packages=["b2bapi"]
     include_package_data=True
 )
