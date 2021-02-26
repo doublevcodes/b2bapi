@@ -1,8 +1,8 @@
 import requests
-from endpoints.meme import Meme
-from endpoints.madlibs import Madlibs
-from endpoints.word import Word
-from endpoints.speedtext2 import Speedtext
+from meme import Meme
+from madlibs import Madlibs
+from word import Word
+from speedtext2 import Speedtext
 
 class BytesToBits:
 
