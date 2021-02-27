@@ -33,7 +33,7 @@ This method `GET`s a random selection of text from the:
 
 It returns a `Speedtext` object
 
-#### `*b2bapi.BytesToBits()*.get_madlib()`
+#### `BytesToBits().get_madlib()`
 
 This method `GET`s a random madlib to use by requesting the:
 `https://api.bytestobits.dev/madlibs` endpoint
@@ -43,9 +43,11 @@ It returns a `Madlib` object
 ## *b2bapi*.Word(word)
 
 ### **Attributes**:
+
 1. *Word()*.**word** (`str`) => The word that the word object represents
 
 ### __Methods__:
+
 None
 
 ## *b2bapi*.Meme(title, url, link, subreddit)
