@@ -1,10 +1,14 @@
-class Madlib:
+import json
 
-    def __init__(self, title: str, text: str, number_of_questions: int, questions: list) -> None:
-        self.title = title
-        self.text  = text
-        self.number_of_questions = number_of_questions
-        self.questions = questions
+class Madlib:
+    json_decoder = json.loads
+
+    def __init__(self, Json: str) -> None:
+        ret = self.json_decoder(Json)
+        self.title = ret["title"]
+        self.text  = ret["text"]
+        self.number_of_questions = ret['questions']
+        self.questions = ret['variables']
 
     def __iter__(self) -> iter:
         return iter(self.questions)
