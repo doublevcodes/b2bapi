@@ -30,8 +30,8 @@ class BytesToBits:
         ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
         return ret
 
-    def get_madlib(self) -> Madlib:
+    def get_madlib(self, cls =  Madlib): # return type is Any, needs a madlibs ABC for typing 
         "Returns a randomadlib from the API"
-        ret = requests.get(f'{self.base_url}/madlibs/').json()
-        ret = Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
+        ret = requests.get(f'{self.base_url}/madlibs/')
+        ret = cls(ret.text)
         return ret
