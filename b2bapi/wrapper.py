@@ -1,41 +1,9 @@
 import requests
 from time import sleep
 from madlibs import Madlib
-
-class Meme:
-    def __init__(self, title: str, url: str, link: str, subreddit: str) -> None:
-        self.title = title
-        self.url = url
-        self.link = link
-        self.subreddit = subreddit
-
-    def __str__(self):
-        return self.title
-
-
-class Word:
-    
-    def __init__(self, word):
-        self.word = word
-
-    def __str__(self):
-        return self.word
-
-class Speedtext:
-    
-    def __init__(self, text) -> None:
-        self.text = text
-
-    def __str__(self) -> str:
-        return self.text
-
-    def __repr__(self):
-        return self.text
-
-    def typewriter(self):
-        for char in self.text:
-            print(char, end='', flush=True)
-            sleep(0.08)
+from meme import Meme
+from speedtype2 import Speedtext
+from word import Word
 
 class BytesToBits:
 
@@ -43,22 +11,26 @@ class BytesToBits:
         self.base_url = 'https://api.bytestobits.dev'
         return
 
-    def get_word(self) -> str:
+    def get_word(self) -> Word:
+        "Returns a random word from the API"
         ret = requests.get(f'{self.base_url}/word/').json()
         ret = Word(ret)
         return ret
 
-    def get_speedtext(self) -> str:
+    def get_speedtext(self) -> Speedtext:
+        "Returns a random paragraph from the API"
         ret = requests.get(f'{self.base_url}/speedtext2/').json()
         ret = Speedtext(ret)
         return ret
 
     def get_meme(self) -> Meme:
+        "Returns a random meme from a random subreddit through the API"
         ret = requests.get(f'{self.base_url}/meme/').json()
         ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
         return ret
 
     def get_madlib(self) -> Madlib:
+        "Returns a randomadlib from the API"
         ret = requests.get(f'{self.base_url}/madlibs/').json()
         ret = Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
         return ret
