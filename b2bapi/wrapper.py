@@ -11,7 +11,7 @@ class Meme:
     def __str__(self):
         return self.title
 
-class Madlibs:
+class Madlib:
 
     def __init__(self, title: str, text: str, number_of_questions: int, questions: list) -> None:
         self.title = title
@@ -33,8 +33,8 @@ class Madlibs:
         self.responses = ret
         return tuple(ret)
     
-    def substitute(self, responses) -> str:
-        self.text = self.text.format(*responses)
+    def substitute(self) -> str:
+        self.text = self.text.format(*self.responses)
         return self.text
 
 class Word:
@@ -56,7 +56,7 @@ class Speedtext:
     def __repr__(self):
         return self.text
 
-    def type(self):
+    def typewriter(self):
         for char in self.text:
             print(char, end='', flush=True)
             sleep(0.08)
@@ -82,7 +82,7 @@ class BytesToBits:
         ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
         return ret
 
-    def get_madlib(self) -> Madlibs:
+    def get_madlib(self) -> Madlib:
         ret = requests.get(f'{self.base_url}/madlibs/').json()
-        ret = Madlibs(ret['title'], ret['text'], ret['questions'], ret['variables'])
+        ret = Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
         return ret

@@ -1,4 +1,4 @@
 
-__version__ = '0.1.3'
+__version__ = '1.0.0'
 
 from b2bapi.wrapper import *
