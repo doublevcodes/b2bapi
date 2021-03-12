@@ -1,4 +1,4 @@
 
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
-from .wrapper import *
+from .wrapper import BytesToBits, AsynchronousBytesToBits
