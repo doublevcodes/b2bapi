@@ -23,8 +23,7 @@ class BytesToBits:
     def get_text(self) -> Text:
         "Returns a random paragraph from the API"
         ret = requests.get(f'{self.BASE_URL}/text/', headers=self.auth_header).json()
-        ret = Text(ret)
-        return ret
+        return Text(ret)
 
     def get_meme(self) -> Meme:
         "Returns a random meme from a random subreddit through the API"
@@ -32,11 +31,10 @@ class BytesToBits:
         ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
         return ret
 
-    def get_madlib(self):
+    def get_madlib(self) -> Madlib:
         "Returns a random madlib from the API"
         ret = requests.get(f'{self.BASE_URL}/madlibs/', headers=self.auth_header).json()
-        ret = Madlib(ret['title'], )
-        return ret
+        return Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
 
 class AsynchronousBytesToBits:
 
@@ -63,4 +61,12 @@ class AsynchronousBytesToBits:
         "Returns a random meme from a random subreddit through the API in an asynchronous context"
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.BASE_URL}/meme/', headers=self.auth_header) as request:
-                pass
+                ret = await request.json()
+                return Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
+
+    async def get_madlib(self) -> Madlib:
+        "Returns a random madlib from the API in an asynchronous context"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{self.BASE_URL}/madlibs/', headers=self.auth_header) as request:
+                ret = await request.json()
+                return Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
