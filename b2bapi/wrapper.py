@@ -4,6 +4,7 @@ from .meme import Meme
 from .madlib import Madlib
 from .text import Text
 from .word import Word
+from .errors.response_check import response_check
 
 
 class BytesToBits:
@@ -19,7 +20,6 @@ class BytesToBits:
         "Returns a random word from the API"
         return Word(requests.get(f'{self.BASE_URL}/word/', headers=self.auth_header).json())
         
-
     def get_text(self) -> Text:
         "Returns a random paragraph from the API"
         ret = requests.get(f'{self.BASE_URL}/text/', headers=self.auth_header).json()
@@ -27,7 +27,9 @@ class BytesToBits:
 
     def get_meme(self) -> Meme:
         "Returns a random meme from a random subreddit through the API"
-        ret = requests.get(f'{self.BASE_URL}/meme/', headers=self.auth_header).json()
+        ret = requests.get(f'{self.BASE_URL}/meme/', headers=self.auth_header)
+        response_check(ret)
+        ret = ret.json()
         ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
         return ret
 
