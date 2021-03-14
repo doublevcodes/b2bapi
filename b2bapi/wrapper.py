@@ -1,11 +1,9 @@
-import requests, aiohttp, asyncio
-from time import sleep
+import requests, aiohttp
 from .meme import Meme
 from .madlib import Madlib
 from .text import Text
 from .word import Word
-from .errors.response_check import response_check
-
+from .errors.response_check import response_check, token_check
 
 class BytesToBits:
 
@@ -13,29 +11,35 @@ class BytesToBits:
         self.auth_header = {
             'Authorization': token
         }
+        token_check(token)
+        self.token = token
         self.BASE_URL = 'https://api.bytestobits.dev'
         return
 
     def get_word(self) -> Word:
         "Returns a random word from the API"
-        return Word(requests.get(f'{self.BASE_URL}/word/', headers=self.auth_header).json())
+        ret = requests.get(f'{self.BASE_URL}/word/', headers=self.auth_header)
+        response_check(ret, self.token)
+        return Word(ret.json())
         
     def get_text(self) -> Text:
         "Returns a random paragraph from the API"
-        ret = requests.get(f'{self.BASE_URL}/text/', headers=self.auth_header).json()
-        return Text(ret)
+        ret = requests.get(f'{self.BASE_URL}/text/', headers=self.auth_header)
+        response_check(ret, self.token)
+        return Text(ret.json())
 
     def get_meme(self) -> Meme:
         "Returns a random meme from a random subreddit through the API"
         ret = requests.get(f'{self.BASE_URL}/meme/', headers=self.auth_header)
-        response_check(ret)
+        response_check(ret, self.token)
         ret = ret.json()
-        ret = Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
-        return ret
+        return Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
 
     def get_madlib(self) -> Madlib:
         "Returns a random madlib from the API"
-        ret = requests.get(f'{self.BASE_URL}/madlibs/', headers=self.auth_header).json()
+        ret = requests.get(f'{self.BASE_URL}/madlibs/', headers=self.auth_header)
+        response_check(ret, self.token)
+        ret = ret.json()
         return Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
 
 class AsynchronousBytesToBits:
@@ -44,6 +48,8 @@ class AsynchronousBytesToBits:
         self.auth_header = {
             'Authorization': token
         }
+        token_check(token)
+        self.token = token
         self.BASE_URL = 'https://api.bytestobits.dev'
         return
 
@@ -51,18 +57,21 @@ class AsynchronousBytesToBits:
         "Returns a random word from the API in an asynchronous context"
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.BASE_URL}/word/', headers=self.auth_header) as request:
+                response_check(request, self.token)
                 return Word(await request.json())
     
     async def get_text(self) -> Text:
         "Returns a random paragraph from the API in an asynchronous context"
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.BASE_URL}/text/', headers=self.auth_header) as request:
+                response_check(request, self.token)
                 return Text(await request.json())
 
     async def get_meme(self) -> Meme:
         "Returns a random meme from a random subreddit through the API in an asynchronous context"
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.BASE_URL}/meme/', headers=self.auth_header) as request:
+                response_check(request, self.token)
                 ret = await request.json()
                 return Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
 
@@ -70,5 +79,6 @@ class AsynchronousBytesToBits:
         "Returns a random madlib from the API in an asynchronous context"
         async with aiohttp.ClientSession() as session:
             async with session.get(f'{self.BASE_URL}/madlibs/', headers=self.auth_header) as request:
+                response_check(request, self.token)
                 ret = await request.json()
                 return Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
