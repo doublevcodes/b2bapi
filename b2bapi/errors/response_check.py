@@ -30,4 +30,3 @@ def token_check(token: str):
     check_ret = requests.get('https://api.bytestobits.dev/info', headers={'Authorization': token})
     if check_ret.status_code == 401:
         raise InvalidTokenError(token)
-    

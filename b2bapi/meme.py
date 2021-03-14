@@ -4,4 +4,3 @@ class Meme:
         self.url = url
         self.link = link
         self.subreddit = subreddit
-        
