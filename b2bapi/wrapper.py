@@ -7,6 +7,7 @@ from .text import Text
 from .word import Word
 from .errors.response_check import response_check, token_check
 
+
 class BytesToBits:
 
     def __init__(self, token: str) -> None:
@@ -23,7 +24,7 @@ class BytesToBits:
         ret = requests.get(f'{self.BASE_URL}/word/', headers=self.auth_header)
         response_check(ret, self.token)
         return Word(ret.json())
-        
+
     def get_text(self) -> Text:
         "Returns a random paragraph from the API"
         ret = requests.get(f'{self.BASE_URL}/text/', headers=self.auth_header)
@@ -44,6 +45,7 @@ class BytesToBits:
         ret = ret.json()
         return Madlib(ret['title'], ret['text'], ret['questions'], ret['variables'])
 
+
 class AsynchronousBytesToBits:
     def __init__(self, token: str, session: Optional[aiohttp.ClientSession] = None) -> None:
         self.auth_header = {
@@ -62,7 +64,7 @@ class AsynchronousBytesToBits:
         "Returns a random word from the API in an asynchronous context"
         async with self.session.get(f'{self.BASE_URL}/word/', headers=self.auth_header) as request:
             return Word(await request.json())
-    
+
     async def get_text(self) -> Text:
         "Returns a random paragraph from the API in an asynchronous context"
         async with self.session.get(f'{self.BASE_URL}/text/', headers=self.auth_header) as request:

@@ -1,5 +1,6 @@
 import requests
 
+
 class RateLimitError(Exception):
 
     def __init__(self, token, status_code: int = 429, message: str = "You have been rate limited, please try again later in {} seconds"):

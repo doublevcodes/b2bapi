@@ -6,6 +6,7 @@ from typing import Union
 import requests
 import aiohttp
 
+
 def response_check(response: Union[requests.Response, aiohttp.ClientResponse], token: str):
     if isinstance(response, requests.Response):
         if response.status_code == 429:
@@ -19,6 +20,7 @@ def response_check(response: Union[requests.Response, aiohttp.ClientResponse], t
         if response.status == 401:
             raise UnauthorisedError
         raise UnknownError
+
 
 def token_check(token: str):
     if len(token) != 25:

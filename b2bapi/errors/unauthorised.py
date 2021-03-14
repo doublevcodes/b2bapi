@@ -8,3 +8,4 @@ class UnauthorisedError(Exception):
 
     def __str__(self):
         return f'{self.code}: {self.message}'
+        
