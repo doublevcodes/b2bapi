@@ -5,6 +5,7 @@ class Madlib:
         self.text  = text
         self.number_of_questions = number_of_questions
         self.questions = questions
+        self.responses = ()
 
     def __iter__(self) -> iter:
         return iter(self.questions)
@@ -17,7 +18,7 @@ class Madlib:
         for question in self:
             print(f'Please enter a/an {question}')
             ret.append(input())
-        self.responses = ret
+        self.responses = tuple(ret)
         return tuple(ret)
     
     def substitute(self) -> str:
