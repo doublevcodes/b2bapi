@@ -1,5 +1,3 @@
-import json
-
 class Madlib:
 
     def __init__(self, title, text, number_of_questions, questions) -> None:

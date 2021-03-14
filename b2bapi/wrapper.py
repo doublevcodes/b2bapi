@@ -1,8 +1,6 @@
 import requests
 import aiohttp
-import asyncio
 from typing import Optional
-from time import sleep
 from .meme import Meme
 from .madlib import Madlib
 from .text import Text
