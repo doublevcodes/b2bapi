@@ -71,7 +71,7 @@ class AsynchronousBytesToBits:
             return Text(await request.json())
 
     async def get_meme(self) -> Meme:
-        "Returns a random meme from a random subreddit through the API in an asynchronous context"
+        "Returns a random meme from the API in an asynchronous context"
         async with self.session.get(f'{self.BASE_URL}/meme/', headers=self.auth_header) as request:
             ret = await request.json()
             return Meme(ret['title'], ret['url'], ret['link'], ret['subreddit'])
