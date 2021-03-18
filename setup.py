@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="b2bapi",
-    version="2.0.0",
+    version="2.1.1",
     description="Interact with the BytesToBits API through Python",
     long_description=README,
     long_description_content_type="text/markdown",
