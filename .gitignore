@@ -135,3 +135,6 @@ dmypy.json
 
 # Testing
 test.py
+
+# Bot checks
+.deepsource.toml
