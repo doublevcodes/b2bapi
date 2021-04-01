@@ -1,14 +1,11 @@
-import json
-
 class Madlib:
-    json_decoder = json.loads
 
-    def __init__(self, Json: str) -> None:
-        ret = self.json_decoder(Json)
-        self.title = ret["title"]
-        self.text  = ret["text"]
-        self.number_of_questions = ret['questions']
-        self.questions = ret['variables']
+    def __init__(self, title, text, number_of_questions, questions) -> None:
+        self.title = title
+        self.text = text
+        self.number_of_questions = number_of_questions
+        self.questions = questions
+        self.responses = ()
 
     def __iter__(self) -> iter:
         return iter(self.questions)
@@ -21,9 +18,9 @@ class Madlib:
         for question in self:
             print(f'Please enter a/an {question}')
             ret.append(input())
-        self.responses = ret
+        self.responses = tuple(ret)
         return tuple(ret)
-    
+
     def substitute(self) -> str:
         self.text = self.text.format(*self.responses)
         return self.text

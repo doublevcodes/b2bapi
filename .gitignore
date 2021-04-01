@@ -130,3 +130,11 @@ dmypy.json
 
 # Editing Environments
 .replit
+.vscode
+.idea
+
+# Testing
+test.py
+
+# Bot checks
+.deepsource.toml
