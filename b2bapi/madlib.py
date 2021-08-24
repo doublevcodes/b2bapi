@@ -1,4 +1,5 @@
 class Madlib:
+    __slots__ = ("title", "text", "number_of_questions", "questions", "responses")
 
     def __init__(self, title, text, number_of_questions, questions) -> None:
         self.title = title
