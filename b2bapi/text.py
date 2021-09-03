@@ -1,7 +1,7 @@
 from time import sleep
 
-
 class Text:
+    __slots__ = ("text",)
 
     def __init__(self, text) -> None:
         self.text = text
