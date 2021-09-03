@@ -10,13 +10,13 @@ def response_check(response: Union[requests.Response, aiohttp.ClientResponse], t
     if isinstance(response, requests.Response):
         if response.status_code == 429:
             raise RateLimitError(token=token)
-        elif response.status_code == 401:
+        if response.status_code == 401:
             raise UnauthorisedError
         raise UnknownError
-    elif isinstance(response, aiohttp.ClientResponse):
+    if isinstance(response, aiohttp.ClientResponse):
         if response.status == 429:
             raise RateLimitError(token=token)
-        elif response.status == 401:
+        if response.status == 401:
             raise UnauthorisedError
         raise UnknownError
 
